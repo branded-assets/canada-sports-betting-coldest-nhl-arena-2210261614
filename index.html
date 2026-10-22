@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coldest NHL Arenas | CanadaSportsBetting.ca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#06182b;
+    --deep:#0b2f52;
+    --glacier:#1b5f8f;
+    --frost:#9fd8f5;
+    --ice:#e6f6ff;
+    --white:#ffffff;
+    --display:'Big Shoulders Display','Arial Narrow','Helvetica Neue',Arial,sans-serif;
+    --body:'Instrument Sans','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#030d19}
+  body{display:flex;flex-direction:column;align-items:center;font-family:var(--body)}
+
+  .stage{
+    container-type:inline-size;
+    position:relative;
+    width:min(100vw,1080px);
+    aspect-ratio:1/1.15;
+    overflow:hidden;
+    color:var(--ice);
+    background:
+      radial-gradient(ellipse 60% 42% at 50% 54%, rgba(159,216,245,.30) 0%, rgba(159,216,245,0) 70%),
+      radial-gradient(ellipse 90% 60% at 50% 0%, rgba(120,190,235,.22) 0%, rgba(120,190,235,0) 65%),
+      linear-gradient(180deg,#0e3b66 0%, #0a2a4b 45%, #06182b 100%);
+  }
+
+  /* frost creeping in from the corners */
+  .frost{position:absolute;inset:0;pointer-events:none}
+  .frost svg{width:100%;height:100%;display:block}
+
+  /* snow */
+  .snow{position:absolute;inset:0;pointer-events:none}
+  .snow i{
+    position:absolute;top:-3cqw;border-radius:50%;background:#fff;opacity:.55;
+    animation:fall linear infinite;
+  }
+  @keyframes fall{to{transform:translate3d(var(--dx),128cqw,0)}}
+  @media (prefers-reduced-motion:reduce){.snow{display:none}}
+
+  /* header */
+  header{position:absolute;left:0;right:0;top:0;padding:5.2cqw 6cqw 0;text-align:center}
+  h1{
+    font-family:var(--display);font-weight:900;
+    font-size:10.6cqw;line-height:.94;letter-spacing:.005em;
+    color:var(--white);
+    text-shadow:0 0 3cqw rgba(159,216,245,.45);
+  }
+  .sub{
+    margin:2.2cqw auto 0;max-width:80cqw;
+    font-size:2.2cqw;line-height:1.45;font-weight:400;color:#bfe3f7;
+  }
+  .sub b{font-weight:600;color:var(--white)}
+
+  /* keyword cloud */
+  .cloud{position:absolute;inset:0}
+  .w{
+    position:absolute;transform:translate(-50%,-50%);
+    font-family:var(--body);font-weight:400;white-space:nowrap;
+    color:var(--frost);letter-spacing:.01em;
+    text-shadow:0 0 1.4cqw rgba(159,216,245,.25);
+  }
+
+  /* hero */
+  .hero{
+    position:absolute;left:50%;top:72cqw;transform:translate(-50%,-50%);
+    width:46cqw;text-align:center;
+  }
+  .num{font-family:var(--display);font-weight:900;font-size:6.6cqw;line-height:.9;color:var(--frost);margin-bottom:1cqw;text-shadow:0 0 2.4cqw rgba(159,216,245,.7)}
+  .num{font-family:var(--display);font-weight:900;font-size:6.6cqw;line-height:.9;color:var(--white);margin-bottom:1cqw;text-shadow:0 0 2.4cqw rgba(230,246,255,.6)}
+  .arena{
+    font-family:var(--display);font-weight:900;
+    font-size:7.4cqw;line-height:.92;color:var(--white);
+    text-shadow:0 0 2.4cqw rgba(230,246,255,.55),0 .3cqw 0 rgba(6,24,43,.6);
+  }
+  .team{
+    margin-top:1.8cqw;
+    font-family:var(--display);font-weight:800;font-size:3.8cqw;line-height:1;
+    color:var(--white);text-shadow:0 0 1.8cqw rgba(230,246,255,.5);
+  }
+  .rule{width:9cqw;height:.35cqw;margin:2.2cqw auto;background:linear-gradient(90deg,transparent,var(--frost),transparent)}
+  .stat{font-size:2.15cqw;line-height:1.35;color:var(--ice);font-weight:500}
+  .stat strong{
+    display:block;font-family:var(--display);font-weight:900;
+    font-size:6cqw;line-height:1;color:var(--white);margin-bottom:.4cqw;
+  }
+
+  /* footer */
+  footer{
+    position:absolute;left:0;right:0;bottom:0;
+    padding:0 6cqw 4.2cqw;text-align:center;
+  }
+  footer::before{
+    content:"";display:block;height:.2cqw;margin:0 auto 2.6cqw;width:70cqw;
+    background:linear-gradient(90deg,transparent,rgba(159,216,245,.55),transparent);
+  }
+  .brand{font-family:var(--display);font-weight:800;font-size:4cqw;letter-spacing:.03em;color:var(--white)}
+  .src{margin-top:.8cqw;font-size:1.55cqw;color:#7fb0cf}
+
+  /* full ranking */
+  .rank{
+    container-type:inline-size;position:relative;width:min(100vw,1080px);
+    padding:7cqw 7cqw 5cqw;color:var(--ice);
+    background:linear-gradient(180deg,#06182b 0%,#0a2a4b 55%,#06182b 100%);
+  }
+  .rank h2{font-family:var(--display);font-weight:900;font-size:6.6cqw;line-height:1;color:var(--white);text-align:center}
+  .rank h2{margin-bottom:5cqw}
+  .colhead{text-align:right;font-size:1.9cqw;font-weight:500;color:#9fcbe6;padding-bottom:1.4cqw;border-bottom:.12cqw solid rgba(159,216,245,.12)}
+  .row{display:grid;grid-template-columns:5.2cqw 1fr 11cqw;align-items:center;column-gap:2cqw;padding:1.05cqw 0}
+  .row + .row{border-top:.12cqw solid rgba(159,216,245,.12)}
+  .pos{font-family:var(--display);font-weight:800;font-size:3.6cqw;color:var(--frost);text-align:right;line-height:1}
+  .nm{font-size:2.5cqw;font-weight:600;color:var(--white);line-height:1.15}
+  .nm small{font-weight:400;font-size:1.9cqw;color:#8dbfdc;margin-left:1.2cqw}
+  .loc{font-size:1.75cqw;color:#7fb0cf;margin-top:.35cqw;line-height:1.2}
+  .bar{height:1.3cqw;margin-top:.8cqw;border-radius:1cqw;background:rgba(159,216,245,.10);overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:1cqw;background:linear-gradient(90deg,#3d8fc4,#9fd8f5)}
+  .pct{font-family:var(--display);font-weight:800;font-size:3.9cqw;color:var(--ice);text-align:right;line-height:1}
+  .row.top .nm,.row.top .pct,.row.top .pos{color:var(--white)}
+  .row.top .bar i{background:linear-gradient(90deg,#9fd8f5,#ffffff);box-shadow:0 0 1.6cqw rgba(230,246,255,.6)}
+  .rank .min{margin-top:1.6cqw;text-align:center;font-size:1.7cqw;color:#7fb0cf}
+  .rank .brand{margin-top:4.2cqw;text-align:center;font-size:3.4cqw}
+
+  .row{position:relative;outline:none;cursor:default;transition:background .15s}
+  .row:hover,.row:focus-visible,.row.on{background:rgba(159,216,245,.07)}
+  .row:hover,.row:focus-visible,.row.on{z-index:5}
+  .tip{
+    position:absolute;right:0;top:50%;transform:translateY(-50%);
+    display:none;grid-template-columns:1fr 1fr 1.25fr;gap:1.6cqw;width:46cqw;
+    padding:1.4cqw 1.8cqw;border-radius:1cqw;
+    background:#0d3558;border:.15cqw solid rgba(159,216,245,.55);
+    box-shadow:0 1cqw 3cqw rgba(0,0,0,.55),0 0 2cqw rgba(159,216,245,.18);
+    pointer-events:none;text-align:left;
+  }
+  .row:hover .tip,.row:focus-visible .tip,.row.on .tip{display:grid}
+  .tip>div{display:flex;flex-direction:column;justify-content:flex-end}
+  .tip span{display:block;font-size:1.35cqw;line-height:1.25;color:#9fcbe6;margin-bottom:.5cqw}
+  .tip b{display:block;font-family:var(--display);font-weight:800;font-size:3.4cqw;line-height:1;color:var(--white)}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <div class="frost" aria-hidden="true">
+    <svg viewBox="0 0 1000 1250" preserveAspectRatio="none">
+      <defs>
+        <radialGradient id="fc1" cx="0" cy="0" r="1">
+          <stop offset="0" stop-color="#e6f6ff" stop-opacity=".55"/>
+          <stop offset="1" stop-color="#e6f6ff" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="fc2" cx="1" cy="1" r="1">
+          <stop offset="0" stop-color="#e6f6ff" stop-opacity=".5"/>
+          <stop offset="1" stop-color="#e6f6ff" stop-opacity="0"/>
+        </radialGradient>
+        <g id="branch" stroke="#e6f6ff" stroke-linecap="round" fill="none">
+          <path d="M0 0 L300 0" stroke-width="2.4"/>
+          <path d="M70 0 L110 -44 M70 0 L110 44" stroke-width="1.8"/>
+          <path d="M140 0 L190 -56 M140 0 L190 56" stroke-width="1.6"/>
+          <path d="M210 0 L252 -36 M210 0 L252 36" stroke-width="1.3"/>
+          <path d="M260 0 L285 -20 M260 0 L285 20" stroke-width="1"/>
+        </g>
+      </defs>
+      <circle cx="0" cy="0" r="420" fill="url(#fc1)"/>
+      <circle cx="1000" cy="1250" r="440" fill="url(#fc2)"/>
+      <g opacity=".42">
+        <g transform="translate(0 0) rotate(45)"><use href="#branch"/></g>
+        <g transform="translate(0 0) rotate(18) scale(.8)"><use href="#branch"/></g>
+        <g transform="translate(0 0) rotate(72) scale(.8)"><use href="#branch"/></g>
+        <g transform="translate(1000 1250) rotate(225)"><use href="#branch"/></g>
+        <g transform="translate(1000 1250) rotate(198) scale(.8)"><use href="#branch"/></g>
+        <g transform="translate(1000 1250) rotate(252) scale(.8)"><use href="#branch"/></g>
+      </g>
+      <g opacity=".22">
+        <g transform="translate(1000 0) rotate(135) scale(.7)"><use href="#branch"/></g>
+        <g transform="translate(0 1250) rotate(-45) scale(.7)"><use href="#branch"/></g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="snow" id="snow" aria-hidden="true"></div>
+
+  <header>
+    <h1>The Coldest NHL Arenas</h1>
+    <p class="sub">Analysis of <b>90,662 Google reviews</b> across all <b>32 NHL arenas</b>, ranked by the share of reviews that mention <b>26 cold-related words</b>, from “chilly” to “hypothermia.”</p>
+  </header>
+
+  <div class="cloud" id="cloud" aria-hidden="true"></div>
+
+  <section class="hero" aria-label="Coldest NHL arena">
+    <div class="num">#1</div>
+    <div class="arena">Amerant Bank Arena</div>
+    <div class="team">Florida Panthers</div>
+    <div class="rule"></div>
+    <div class="stat"><strong>6.44%</strong>of Google reviews mention cold-related words</div>
+  </section>
+
+</div>
+
+<section class="rank" aria-label="Full ranking">
+  <h2>Full Ranking</h2>
+  <div class="colhead">Share of Google reviews mentioning cold-related words</div>
+  <div id="rows"></div>
+  <div class="brand">CanadaSportsBetting.ca</div>
+  <p class="min">Source: CanadaSportsBetting.ca analysis of Google reviews for all 32 current NHL arenas.<br>A minimum of 1,000 Google reviews was collected per arena.</p>
+</section>
+
+<script>
+(function(){
+  var words = ["cold","freezing","chilly","icy","frozen","frigid","frostbitten","frosty","wintry","subzero","unheated","drafty","draughty","shivering","shivered","chills","chilled","hypothermia","goosebumps","gooseflesh","chilliness","chill","arctic","shivers","frost","ice"];
+
+  // Hand-placed keywords around the centre block: [word, x, y, size (cqw), opacity, rotation]
+  var cloud = document.getElementById('cloud');
+  var layout = [
+    ["shivers",24,41,2.6,.5,-3],["frostbitten",48,39.5,2.7,.52,2],["wintry",77,41,2.6,.5,-2],
+    ["frost",33,47.5,3.6,.72,-4],["ice",62,46.5,4.2,.92,3],["cold",73.5,51,4.4,.95,-5],
+    ["subzero",87,47,2.6,.5,3],
+    ["chilliness",14,53,2.7,.52,-5],["frosty",17,61,4.4,.95,4],["freezing",85,58.5,4.2,.9,-3],
+    ["chills",14,69,3.7,.78,-2],["frigid",84,67,4,.9,4],
+    ["gooseflesh",14,77,2.7,.52,-4],["unheated",87,75.5,2.6,.5,-4],
+    ["arctic",17,85,4.2,.92,-5],["drafty",86,83.5,3,.65,2],
+    ["goosebumps",13,93,2.8,.6,3],["icy",80,92,3.9,.85,-3],
+    ["hypothermia",28,101,2.7,.52,-3],["chilly",46,98.5,4.2,.92,4],["frozen",62,101,4.4,.95,-2],
+    ["draughty",85,101,2.7,.5,3],["shivered",40,108,2.5,.48,-1],["shivering",70,108,2.8,.6,-3]
+  ];
+  layout.forEach(function(l){
+    var el=document.createElement('span');
+    el.className='w'; el.textContent=l[0];
+    el.style.left=l[1]+'cqw'; el.style.top=l[2]+'cqw';
+    el.style.fontSize=l[3]+'cqw'; el.style.opacity=l[4];
+    el.style.transform='translate(-50%,-50%) rotate('+l[5]+'deg)';
+    cloud.appendChild(el);
+  });
+
+  var data=[["Amerant Bank Arena","Florida Panthers","Sunrise, Florida",6.44,145,2250],["SAP Center","San Jose Sharks","San Jose, California",4.55,147,3230],["Grand Casino Arena","Minnesota Wild","Saint Paul, Minnesota",4.48,143,3190],["Rogers Place","Edmonton Oilers","Edmonton, Alberta",4.23,134,3170],["Honda Center","Anaheim Ducks","Anaheim, California",4.03,129,3200],["Prudential Center","New Jersey Devils","Newark, New Jersey",4.03,126,3130],["Delta Center","Utah Mammoth","Salt Lake City, Utah",3.90,130,3330],["UBS Arena","New York Islanders","Elmont, New York",3.67,116,3157],["KeyBank Center","Buffalo Sabres","Buffalo, New York",3.58,117,3270],["Canadian Tire Centre","Ottawa Senators","Ottawa, Ontario",3.57,116,3250],["Xfinity Mobile Arena","Philadelphia Flyers","Philadelphia, Pennsylvania",3.42,113,3300],["Little Caesars Arena","Detroit Red Wings","Detroit, Michigan",3.32,106,3190],["Canada Life Centre","Winnipeg Jets","Winnipeg, Manitoba",3.27,48,1470],["United Center","Chicago Blackhawks","Chicago, Illinois",3.21,104,3240],["Nationwide Arena","Columbus Blue Jackets","Columbus, Ohio",3.19,89,2790],["Capital One Arena","Washington Capitals","Washington, D.C.",3.18,104,3270],["Scotiabank Arena","Toronto Maple Leafs","Toronto, Ontario",3.15,51,1620],["Bell Centre","Montreal Canadiens","Montreal, Quebec",3.03,94,3100],["T-Mobile Arena","Vegas Golden Knights","Paradise, Nevada",2.93,93,3170],["Rogers Arena","Vancouver Canucks","Vancouver, British Columbia",2.91,92,3160],["TD Garden","Boston Bruins","Boston, Massachusetts",2.90,89,3070],["Climate Pledge Arena","Seattle Kraken","Seattle, Washington",2.77,88,3180],["Lenovo Center","Carolina Hurricanes","Raleigh, North Carolina",2.65,85,3210],["Enterprise Center","St. Louis Blues","St. Louis, Missouri",2.62,85,3250],["Bridgestone Arena","Nashville Predators","Nashville, Tennessee",2.50,40,1600],["Scotiabank Saddledome","Calgary Flames","Calgary, Alberta",2.40,63,2630],["Ball Arena","Colorado Avalanche","Denver, Colorado",2.38,77,3240],["Crypto.com Arena","Los Angeles Kings","Los Angeles, California",2.37,75,3170],["Madison Square Garden","New York Rangers","New York City, New York",1.79,57,3180],["American Airlines Center","Dallas Stars","Dallas, Texas",1.78,39,2188],["Benchmark International Arena","Tampa Bay Lightning","Tampa, Florida",1.56,19,1219],["PPG Paints Arena","Pittsburgh Penguins","Pittsburgh, Pennsylvania",1.13,14,1238]];
+  var rows=document.getElementById('rows'), max=data[0][3];
+  data.forEach(function(d,i){
+    var r=document.createElement('div'); r.className='row'+(i===0?' top':''); r.tabIndex=0;
+    r.innerHTML='<div class="pos">'+(i+1)+'</div><div><div class="nm">'+d[0]+'<small>'+d[1]+'</small></div><div class="loc">'+d[3-1]+'</div><div class="bar"><i style="width:'+(d[3]/max*100).toFixed(1)+'%"></i></div></div><div class="pct">'+d[3].toFixed(2)+'%</div><div class="tip" role="tooltip"><div><span>Reviews With Cold Keywords</span><b>'+d[4].toLocaleString('en-US')+'</b></div><div><span>Total Reviews Analyzed</span><b>'+d[5].toLocaleString('en-US')+'</b></div><div><span>% Reviews Mentioning Cold Keywords</span><b>'+d[3].toFixed(2)+'%</b></div></div>';
+    r.addEventListener('click',function(){var on=r.classList.contains('on');document.querySelectorAll('.row.on').forEach(function(x){x.classList.remove('on')});if(!on)r.classList.add('on');});
+    rows.appendChild(r);
+  });
+
+  // snow
+  var snow = document.getElementById('snow');
+  var seed = 7;
+  function rnd(){ seed = (seed*9301+49297)%233280; return seed/233280; }
+  for(var i=0;i<38;i++){
+    var d = document.createElement('i');
+    var s = .35 + rnd()*.8;
+    d.style.left = (rnd()*100)+'%';
+    d.style.width = d.style.height = s+'cqw';
+    d.style.opacity = .25 + rnd()*.5;
+    d.style.setProperty('--dx', ((rnd()-.5)*10)+'cqw');
+    d.style.animationDuration = (14 + rnd()*18)+'s';
+    d.style.animationDelay = (-rnd()*30)+'s';
+    snow.appendChild(d);
+  }
+})();
+</script>
+</body>
+</html>
